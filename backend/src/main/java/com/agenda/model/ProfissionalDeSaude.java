@@ -2,17 +2,18 @@ package com.agenda.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "contatos")
+@Table(name = "profissionais_de_saude")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Contato {
+public class ProfissionalDeSaude {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +26,13 @@ public class Contato {
     @Column(length = 20)
     private String telefone;
 
-    @Column(length = 100)
-    private String email;
-
     @Column(length = 200)
     private String endereco;
+
+    @NotBlank(message = "Categoria é obrigatória")
+    @Pattern(regexp = "Psicólogo|Fisioterapeuta|Médico", message = "Categoria deve ser Psicólogo, Fisioterapeuta ou Médico")
+    @Column(length = 50, nullable = false)
+    private String categoria;
 
     @Column(name = "criado_em")
     private LocalDateTime criadoEm = LocalDateTime.now();
