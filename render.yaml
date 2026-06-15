@@ -3,7 +3,9 @@ services:
   - type: web
     name: agenda-backend-joao
     env: docker
-    dockerfilePath: backend/Dockerfile
+    rootDirectory: backend
+    dockerContext: backend
+    dockerfilePath: Dockerfile
     plan: free
     envVars:
       - key: DB_HOST
@@ -31,11 +33,13 @@ services:
   - type: web
     name: agenda-frontend-joao
     env: docker
-    dockerfilePath: frontend/Dockerfile
+    rootDirectory: frontend
+    dockerContext: frontend
+    dockerfilePath: Dockerfile
     plan: free
     envVars:
       - key: REACT_APP_API_URL
-        value: https://agenda-backend-joao.onrender.com/api # Após criar, substitua pela URL gerada pelo Render para o seu backend.
+        value: https://agenda-backend-joao.onrender.com  # URL gerada pelo Render para o backend
 
 databases:
   - name: agenda-db-joao
