@@ -2,9 +2,9 @@ name: CI/CD Pipeline - Agenda Web (Java + React)
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
 
 jobs:
   # ========================================
@@ -96,7 +96,7 @@ jobs:
   deploy:
     needs: [test-backend, test-frontend]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push'
 
     steps:
       - name: 📥 Checkout do código
@@ -111,7 +111,7 @@ jobs:
           docker-compose up -d
           sleep 20
           # Testa se a API está respondendo
-          curl -f http://localhost:8080/api/contatos || exit 1
+          curl -f http://localhost:8080/api/profissionais || exit 1
           # Testa se o frontend está acessível
           curl -f http://localhost:3000 || exit 1
           echo "✅ Testes de aceitação passaram!"
@@ -140,5 +140,5 @@ jobs:
       - name: 🏁 Health Check
         run: |
           sleep 30
-          curl -f http://${{ secrets.AWS_APP_URL }}/api/contatos || exit 1
+          curl -f http://${{ secrets.AWS_APP_URL }}/api/profissionais || exit 1
           echo "✅ Aplicação em produção na AWS!"
