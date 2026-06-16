@@ -104,18 +104,18 @@ jobs:
 
       - name: 🐳 Build das imagens Docker
         run: |
-          docker-compose build
+          docker compose build
 
       - name: ✅ Testes de Aceitação (E2E)
         run: |
-          docker-compose up -d
+          docker compose up -d
           sleep 20
           # Testa se a API está respondendo
           curl -f http://localhost:8080/api/profissionais || exit 1
           # Testa se o frontend está acessível
           curl -f http://localhost:3000 || exit 1
           echo "✅ Testes de aceitação passaram!"
-          docker-compose down
+          docker compose down
 
       - name: 🔑 Login no AWS ECR
         uses: aws-actions/configure-aws-credentials@v4
