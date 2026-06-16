@@ -116,29 +116,3 @@ jobs:
           curl -f http://localhost:3000 || exit 1
           echo "✅ Testes de aceitação passaram!"
           docker compose down
-
-      - name: 🔑 Login no AWS ECR
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: 📤 Push imagens para Amazon ECR
-        run: |
-          aws ecr get-login-password | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
-          docker tag agenda-web-backend:latest ${{ secrets.ECR_REGISTRY }}/agenda-backend:latest
-          docker tag agenda-web-frontend:latest ${{ secrets.ECR_REGISTRY }}/agenda-frontend:latest
-          docker push ${{ secrets.ECR_REGISTRY }}/agenda-backend:latest
-          docker push ${{ secrets.ECR_REGISTRY }}/agenda-frontend:latest
-
-      - name: 🚀 Deploy para AWS ECS/EC2
-        run: |
-          aws ecs update-service --cluster agenda-cluster --service agenda-backend --force-new-deployment
-          aws ecs update-service --cluster agenda-cluster --service agenda-frontend --force-new-deployment
-
-      - name: 🏁 Health Check
-        run: |
-          sleep 30
-          curl -f http://${{ secrets.AWS_APP_URL }}/api/profissionais || exit 1
-          echo "✅ Aplicação em produção na AWS!"
