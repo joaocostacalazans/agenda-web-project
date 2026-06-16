@@ -1,6 +1,6 @@
-# Agenda Web - Material Educacional
+# Agenda Web Clínica
 
-Sistema de Agenda Web para demonstração do ciclo completo de desenvolvimento de software.
+Sistema de agenda web para clínica.
 
 ## Tecnologias
 
@@ -57,8 +57,8 @@ npm test
 
 ## Divisão de Trabalho
 
-- **DEV 1 - João:** CRUD de Contatos (ContatoController + ContatoList/Form)
-- **DEV 2 - Bruno:** CRUD de Compromissos (CompromissoController + CompromissoList/Form)
+- **DEV 1 - João Costa:** CRUD de Contatos (ContatoController + ContatoList/Form)
+- **DEV 2 - Bruno Menezes:** CRUD de Compromissos (CompromissoController + CompromissoList/Form)
 
 ## Apresentação
 
